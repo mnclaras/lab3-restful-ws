@@ -1,0 +1,131 @@
+#%RAML 1.0
+title: "AddressBookServiceApi"
+description: "API used for the lab3"
+version: "v1"
+protocols:
+- "HTTP"
+baseUri: "http://localhost:8282/v1"
+mediaType:
+- "application/json"
+types:
+  Person:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+        example: 1
+      name:
+        type: "string"
+        example: "Maria"
+      email:
+        type: "string"
+        example: "mail@domain.com"
+      href:
+        type: "URI"
+      phoneList:
+        type: "array"
+        items:
+          type: "PhoneNumber"
+  URI:
+    type: "object"
+    properties:
+      scheme:
+        type: "string"
+        example: "http"
+      authority:
+        type: "string"
+        example: "//"
+      host:
+        type: "string"
+        example: "localhost"
+      port:
+        type: "number"
+        example: 8282
+      path:
+        type: "string"
+        example: "/contacts"
+      query:
+        type: "string"
+  PhoneNumber:
+    type: "object"
+    properties:
+      number:
+        type: "string"
+        example: "612345678"
+      type:
+        type: "string"
+        enum:
+        - "MOBILE"
+        - "HOME"
+        - "WORK"
+        example: "MOBILE"
+  AddressBook:
+    type: "object"
+    properties:
+      nextId:
+        type: "number"
+        example: 1
+      personList:
+        type: "array"
+        items:
+          type: "Person"
+/contacts:
+  get:
+    displayName: "getContacts"
+    description: "Gets the full address book"
+    responses:
+      200:
+        description: "Full contact list"
+        body:
+          application/json:
+            type: "array"
+            description: "List of AddressBook"
+            items:
+              type: "AddressBook"
+  post:
+    displayName: "addContact"
+    description: "Adds a new entry to the address book"
+    body:
+      application/json:
+        type: "Person"
+        description: "Contact to add"
+    responses:
+      201:
+        description: "Person added"
+/contacts/person/{id}:
+  uriParameters:
+    id:
+      type: "string"
+      required: false
+  get:
+    displayName: "getPerson"
+    description: "Returns the Person with the corresponding id"
+    responses:
+      200:
+        description: "Person found"
+        body:
+          application/json:
+            type: "Person"
+      404:
+        description: "Person not found"
+  put:
+    displayName: "updatePerson"
+    description: "Updates the given person"
+    body:
+      type: "Person"
+    responses:
+      200:
+        description: "Person updated"
+        body:
+          application/json:
+            type: "Person"
+      400:
+        description: "Bad request"
+  delete:
+    displayName: "deletePerson"
+    description: "Deletes the given person"
+    responses:
+      204:
+        description: "Person deleted succesfully"
+      400:
+        description: "Bad request"

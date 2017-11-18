@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: "Contacts API"
+description: "An API for keeping track of your contacts and the companies they work\
+  \ for. \n\nDon't forget to take it for a spin by clicking on the **Try in Client**\
+  \ button next to each operation! All read operations are public and don't require\
+  \ authentication.\n\n<div>\n<img src='https://thecontactsapi.apispark.net/v1/img/cropped-contact-img.png'\
+  \ width='90%'>\n<div>\n\n<!-- ![](https://thecontactsapi.apispark.net/v1/img/cropped-contact-img.png)\
+  \ -->\n\n"
+version: "1.2.0"
+protocols:
+- "HTTPS"
+baseUri: "https://thecontactsapi.restlet.net/v1"
+mediaType:
+- "application/json"
+securitySchemes:
+  HTTP_BASIC:
+    type: "Basic Authentication"
+    description: "All GET methods are public, meaning that *you can read all the data*.\
+      \ Write operations require authentication and therefore are forbidden to the\
+      \ general public."
